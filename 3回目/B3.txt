@@ -1,0 +1,182 @@
+科目名: プログラミング実習III
+課題: B3
+番号: 37022493
+氏名: 西岡優太
+作成: 2023年10月日
+
+----------------------------------------
+[課題 3.1]
+int 型の変数 a, b と double 型の変数 x, y を宣言し,
+それぞれの番地を表示するプログラム pointer1.c を作成せよ. 実行してどのような数値が番地として表示されたか (どのような数の増え方になっているか) をレポートに記せ.
+
+[実行結果]
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 3回目 % gcc pointer1.c
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 3回目 % ./a.out       
+a の番地は 0x16b2e6e8c
+b の番地は 0x16b2e6e88
+x の番地は 0x16b2e6e80
+y の番地は 0x16b2e6e78
+
+[感想]
+
+----------------------------------------
+[課題 3.2]
+課題 (3-1) の pointer1.c と同様に int 型の変数 a, b と double 型の変数 x, y を宣言して番地を表示し, その番地を用いて変数 a, b, x, y の値を書き換え, 
+a, b, x, y の値を表示するプログラム pointer2.c を作成せよ.
+
+[実行結果]
+
+[感想]
+
+----------------------------------------
+[課題 3.3]
+次のようなプログラム pointer3.c を作成せよ.
+
+  課題 (3-1) の pointer1.c と同様に int 型の変数 a, b と double 型の変数 x, y を宣言する.
+  int 型ポインタ変数と double 型ポインタ変数を宣言する.
+  変数 a, b, x, y の番地を表示する.
+  ポインタ変数を用いて, b の値に 4 を足し, x の値を 2 倍する.
+  double 型変数 (x と y) の番地を入力し, その番地に格納されている値を表示する (番地 0 が入力されるまで繰り返す).
+
+[実行結果]
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 3回目 % gcc pointer3.c
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 3回目 % ./a.out       
+aの番地 = 0x16d54ee88
+bの番地 = 0x16d54ee84
+xの番地 = 0x16d54ee78
+yの番地 = 0x16d54ee70
+番地を入力 : 0x16d54ee70
+0x16d54ee70 番地の内容は 2.718200
+番地を入力 : 0x16d54ee78
+0x16d54ee78 番地の内容は 6.283000
+番地を入力 : 0
+
+[感想]
+
+
+----------------------------------------
+[課題 3.4]
+int 型変数 x と y, および int 型へのポインタ変数 q, r を受け取り, x を y で割った商を q 番地の変数に, 剰余を r 番地の変数に格納して返す関数 divrem を作成せよ.
+
+下記のプログラムの空欄を埋め, 完成したプログラムを divrem.c として提出せよ.
+
+[実行結果]
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 3回目 % gcc divrem.c  
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 3回目 % ./a.out     
+x / y = 3 ... 1
+
+[感想]
+
+----------------------------------------
+[課題 3.5]
+double 型の値 a と b, double 型へのポインタ p_a, p_m を受け取り, a と b の相加平均を p_a 番地に, 相乗平均を p_m 番地に格納する関数 void ave(double a, double b, double *p_a, double *p_m) を作成せよ.
+
+関数 ave は ave6.c というファイルに格納せよ. 関数 ave のプロトタイプ宣言を格納した下記の ave6.h をインクルードせよ. 下記の ave6main.c と ave6.c をリンクして実行し, 動作を確認せよ.
+
+[実行結果]
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 3回目 % gcc ave6main.c ave6.c       
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 3回目 % ./a.out <ave-in.txt> out.txt
+2つの実数 a, b を入力して下さい: 2つの実数 a, b を入力して下さい: 2つの実数 a, b を入力して下さい: 2つの実数 a, b を入力して下さい: %                                     
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 3回目 % diff -w ave-exp.txt out.txt
+
+[感想]
+
+----------------------------------------
+[課題 3.6]
+課題 (2-4) で作成した qeq2.c を次のように書き換え, qeq3.c を作成せよ.
+
+関数を int qeq(double a, double b, double c, double *x1, double *x2) とする. 関数 qeq の中で解を出力するのではなく, 解の個数を返り値として返し, 解を *x1 と *x2 にセットするようにせよ. 解が 1 つの場合は, *x1 にその解をセットせよ. 解が 2 つの場合は, 小さい方を *x1 に, もう一方を *x2 にセットするようにせよ.
+ヘッダファイル次の qeq3.h をインクルードするようにせよ. 次の qeq3main.c とリンクして動作を確認せよ. プログラムは qeq3.c のみ提出せよ.
+
+[実行結果]
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 3回目 % gcc qeq3main.c qeq3.c       
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 3回目 % ./a.out <qeq-in.txt> out.txt
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 3回目 % diff -w qeq-exp.txt out.txt 
+
+[感想]
+
+----------------------------------------
+[課題 3.7]
+課題 (2-3) と同様の構造体型
+
+  typedef struct {
+    double x;   /* x座標 */
+    double y;   /* y座標 */
+  } point_t;
+
+が定義されているとする. 下記の 2 つの関数を作成し, ファイル dist5.c に格納せよ.
+    ・int point_scan(point_t *p)
+      p の指す point_t 型変数のメンバー x と y に標準入力から実数値を読み込む.
+      標準入力が EOF の場合には EOF を, そうでない場合は 1 を返す.
+    ・double dist(point_t *p1, point_t *p2)
+      2点 *p1 と *p2 の間の距離を返す.
+dist5.c からは次の dist5.h (および標準ヘッダ stdio.h, math.h) をインクルードすること.
+
+[実行結果]
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 3回目 % gcc dist5main.c dist5.c -Wall
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 3回目 % ./a.out <dist-in.txt> out.txt
+x=y=x=y=x=y=x=y=x=y=x=y=x=%                                                                                                                                               
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 3回目 % diff -w dist-exp.txt out.txt 
+
+[感想]
+
+----------------------------------------
+[課題 3.8]
+下記 1 〜 6 を行うプログラム arrayp.c を作成せよ.
+
+    まず, 次のような int 型の配列 x[ ] を宣言する．
+        
+        int x[ ] = {0,10,20,30,40};
+        /* x[0]=0, x[1]=10, x[2]=20, x[3]=30, x[4]=40 と初期化される */
+
+1. 教科書 p. 382 を参考に, sizeof 演算子を用いて配列 x[ ] の要素数を求めて k に代入し, それを出力せよ.
+2. x[0], x[1], …, x[k-1] のアドレスを出力せよ (printf の書式指定には %p を用いよ). アドレスがいくつづつ増えているかレポートに記せ.
+3. x の値 (アドレス) を表示せよ (printf の書式指定には %p を用いよ). 2 で表示したアドレスのいずれと一致するかレポートに記せ.
+4. x+0, x+1, …, x+k-1 の値 (アドレス) を表示せよ. 2 で表示したアドレスのいずれと一致するかレポートに記せ.
+5. アドレス x+0, x+1, …, x+k-1 に格納されているデータの値を表示せよ. x[0], x[1], …, x[k-1] のいずれの値と一致するかレポートに記せ.
+6. int 型を指すポインタ変数 p を宣言し, p に x[2] のアドレスを代入せよ. このとき，p+2 の値 (アドレス) と p[2] の値を表示せよ. なぜそのような値になるのかを考察し, 結果をレポートに記せ．
+
+[実行結果]
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 3回目 % gcc arrayp.c -Wall
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 3回目 % ./a.out           
+5
+x[0]のアドレス:0x16fa0ee70
+x[1]のアドレス:0x16fa0ee74
+x[2]のアドレス:0x16fa0ee78
+x[3]のアドレス:0x16fa0ee7c
+x[4]のアドレス:0x16fa0ee80
+xのアドレス:0x16fa0ee70
+x+0のアドレス:0x16fa0ee70
+x+1のアドレス:0x16fa0ee74
+x+2のアドレス:0x16fa0ee78
+x+3のアドレス:0x16fa0ee7c
+x+4のアドレス:0x16fa0ee80
+x+0の値:0
+x+1の値:10
+x+2の値:20
+x+3の値:30
+x+4の値:40
+p+2の値(アドレス):0x16fa0ee78 
+pの値:20 
+
+[感想]
+
+----------------------------------------
+[課題 3.9]
+[実行結果]
+
+[感想]
+
+----------------------------------------
+[課題 3.10]
+[実行結果]
+[感想]
+
+----------------------------------------
+
+[課題 R3 の感想]
+
+R1 ではポインタについて学んだ. ポインタとは, 〜であり, 〜ということが分
+かった.
+
+面白かった/苦労した, etc. 

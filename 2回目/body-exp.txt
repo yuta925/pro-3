@@ -1,0 +1,8 @@
+name: Taro
+stature: 175.4cm
+weight: 65.3kg
+BMI: 21.2
+name: Hanako
+stature: 157.3cm
+weight: 48.8kg
+BMI: 19.7

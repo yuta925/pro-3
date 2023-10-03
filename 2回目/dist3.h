@@ -1,0 +1,1 @@
+double dist(double, double, double, double);
