@@ -4,23 +4,19 @@
 int main(void)
 {
     int n;
-    double A[N][N], x[N], y[N];
+    double A[N][N], Y[N][N];
 
     fprintf(stderr, "n = ");
     scanf("%d", &n);
     fprintf(stderr, "A\n");
     matrix_scan(n, A);
-    fprintf(stderr, "x\n");
-    vector_scan(n, x);
 
-    matrix_vector_prod(n, A, x, y);
+    matrix_trans2(n, A, Y);
 
     printf("A\n");
     matrix_print(n, A);
-    printf("x\n");
-    vector_print(n, x);
-    printf("y\n");
-    vector_print(n, y);
+    printf("Y\n");
+    matrix_print(n, Y);
 
     return 0;
 }
