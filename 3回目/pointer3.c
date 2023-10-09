@@ -27,10 +27,8 @@ int main(void)
         printf("番地を入力 : ");
         scanf("%p", &q);
         if (q == 0)
-        {
             break;
-        }
-        printf("%p 番地の内容は %lf\n", q, *q);
+        printf("%p 番地の内容は %0.4f\n", q, *q);
     }
 
     return 0;

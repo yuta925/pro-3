@@ -13,13 +13,9 @@ int main(void)
     {
         fprintf(stderr, "2つの実数 a, b を入力して下さい: ");
         if (scanf("%lf", &a) == EOF)
-        {
             break;
-        }
         if (scanf("%lf", &b) == EOF)
-        {
             break;
-        }
         ave(a, b, &ave_a, &ave_m);
         printf("%0.3f %0.3f\n", ave_a, ave_m);
     }

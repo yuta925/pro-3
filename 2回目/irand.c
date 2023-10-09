@@ -27,6 +27,9 @@ int main(void)
 
     for (i = a; i <= b; i++)
         printf("%d: %d回\n", i, count[i - a]);
+
+    free(count);
+    count = NULL;
 }
 
 int irand(int a, int b)

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "image1.h"
 
-void bmp_cool(bmp_header_t *hd, pixel_t img[MAX_Y][MAX_X]);
+void bmp_mono(bmp_header_t *hd, pixel_t img[MAX_Y][MAX_X]);
 
 int main(void)
 {
