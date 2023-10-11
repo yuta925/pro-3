@@ -17,35 +17,36 @@ int main(void)
 
 void bmp_mosaic(bmp_header_t *hd, pixel_t img[MAX_Y][MAX_X])
 {
-    int i, j, k, l;
-    int sum_r = 0, sum_g = 0, sum_b = 0;
-    int average_r = 0, average_g = 0, average_b = 0;
+    int x, y, mx, my;
 
-    for (i = 0; i < hd->biHeight; i += 16)
+    for (y = 0; y < hd->biHeight; y += 16)
     {
-        for (j = 0; j < hd->biWidth / 2; j += 16)
+        for (x = 0; x < hd->biWidth / 2; x += 16)
         {
-            for (k = i; k < 16; k++)
+            int sumR = 0, sumG = 0, sumB = 0;
+            int avgR = 0, avgG = 0, avgB = 0;
+
+            for (my = 0; my < 16; my++)
             {
-                for (l = j; l < 16; l++)
+                for (mx = 0; mx < 16; mx++)
                 {
-                    sum_r += img[k][l].r;
-                    sum_g += img[k][l].g;
-                    sum_b += img[k][l].b;
+                    sumR += img[y + my][x + mx].r;
+                    sumG += img[y + my][x + mx].g;
+                    sumB += img[y + my][x + mx].b;
                 }
             }
 
-            average_r = sum_r;
-            average_g = sum_g;
-            average_b = sum_b;
+            avgR = sumR / 256;
+            avgG = sumG / 256;
+            avgB = sumB / 256;
 
-            for (k = i; k < 16; k++)
+            for (my = 0; my < 16; my++)
             {
-                for (l = j; l < 16; l++)
+                for (mx = 0; mx < 16; mx++)
                 {
-                    img[k][l].r = average_r;
-                    img[k][l].g = average_g;
-                    img[k][l].b = average_b;
+                    img[y + my][x + mx].r = avgR;
+                    img[y + my][x + mx].g = avgG;
+                    img[y + my][x + mx].b = avgB;
                 }
             }
         }

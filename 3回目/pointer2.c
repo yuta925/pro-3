@@ -13,14 +13,20 @@ int main(void)
     printf("y の番地は %p\n", &y);
 
     printf("\n");
-    printf("a の値 = %d\n", *((int *)0x16db7ae88));
-    printf("b の値 = %d\n", *((int *)0x16db7ae88));
-    printf("x の値 = %d\n", *((double *)0x16db7ae88));
-    printf("y の値 = %d\n", *((double *)0x16db7ae88));
+    printf("a の値 = %d\n", *((int *)0x7ffffcc2c));
+    printf("b の値 = %d\n", *((int *)0x7ffffcc28));
+    printf("x の値 = %0.1f\n", *((double *)0x7ffffcc20));
+    printf("y の値 = %0.1f\n", *((double *)0x7ffffcc18));
 
-    *((int *)0x16f4c6e78) = 1111;
-    *((int *)0x16f4c6e74) = 2010;
-    *((int *)0x16f4c6e70) = 5628;
+    *((int *)0x7ffffcc2c) = 2;
+    *((int *)0x7ffffcc28) = 1;
+    *((int *)0x7ffffcc20) = 2.2;
+    *((int *)0x7ffffcc18) = 1.1;
+
+    printf("a の値 = %d\n", a);
+    printf("b の値 = %d\n", b);
+    printf("x の値 = %0.1f\n", x);
+    printf("y の値 = %0.1f\n", y);
 
     return 0;
 }

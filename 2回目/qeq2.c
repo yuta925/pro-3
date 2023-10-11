@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <math.h>
+#include <math.h>w
 #include "qeq2.h"
 
 void qeq(double a, double b, double c)
