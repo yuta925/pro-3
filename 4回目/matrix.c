@@ -48,15 +48,17 @@ void matrix_trans2(int n, double A[N][N], double Y[N][N])
 
 void matrix_trans1(int n, double A[N][N])
 {
-    int i, j;
+    int i = 0, j = 0, k = 0;
     double tmp;
-    for (i = 0; i < n; i++)
+    for (i = k; i < n; i++)
     {
-        for (j = 0; j < n; j++)
+        for (j = k; j < n; j++)
         {
-            tmp = A[j][i];
-            A[i][j] = tmp;
+            tmp = A[i][j];
+            A[i][j] = A[j][i];
+            A[j][i] = tmp;
         }
+        k++;
     }
 }
 
@@ -76,7 +78,7 @@ void vector_print(int n, double x[N])
 
 void matrix_vector_prod(int n, double A[N][N], double x[N], double y[N])
 {
-    int i, j, k;
+    int i, j;
     for (i = 0; i < n; i++)
         for (j = 0; j < n; j++)
             y[i] += A[i][j] * x[j];
