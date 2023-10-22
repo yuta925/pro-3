@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 
 #include "list.h"
 
@@ -16,7 +15,7 @@ int main(void)
         {
             break;
         }
-        list_insert(head_p, val);
+        list_insert_uniq(head_p, val);
         list_print(head_p);
     }
     list_delete(head_p);
