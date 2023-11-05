@@ -18,29 +18,16 @@ pref_t *pref_new(char *name, double area, int population)
 
 void pref_print(pref_t *p)
 {
-    printf("%-10s %9.2f %9d\n", p->name, p->area, p->population);
+    printf("%-10s %.2f %9d\n", p->name, p->area, p->population);
 }
 
 pref_t *pref_new_scan()
 {
-    char *name;
-    double area;
-    int population;
-
-    fprintf(stderr, "name:");
-    fscanf("%s", name);
-    fprintf(stderr, "area:");
-    scanf("%9.2f", &area);
-    fprintf(stderr, "population:");
-    scanf("%9d", &population);
-
-    pref_t *p = NULL;
-
+    pref_t *p;
     p = (pref_t *)malloc(sizeof(pref_t));
 
-    strncpy(p->name, name, NAMELEN);
-    p->area = area;
-    p->population = population;
-
-    return p;
+    if (scanf("%s %lf %d", p->name, &p->area, &p->population) == EOF)
+        return NULL;
+    else
+        return p;
 }

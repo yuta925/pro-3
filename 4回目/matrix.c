@@ -80,6 +80,8 @@ void matrix_vector_prod(int n, double A[N][N], double x[N], double y[N])
 {
     int i, j;
     for (i = 0; i < n; i++)
+        y[i] = 0;
+    for (i = 0; i < n; i++)
         for (j = 0; j < n; j++)
             y[i] += A[i][j] * x[j];
 }

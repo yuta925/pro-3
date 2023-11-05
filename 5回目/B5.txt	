@@ -2,72 +2,364 @@
 課題: B5
 番号: 37022493
 氏名: 西岡優太
-作成: 2023年月日
+作成: 2023年 11月 5日
 
 ----------------------------------------
 [課題 5.1]
 
+次の処理を行う関数 int* new_array_scan(int *pn) を作成せよ.
+
+  1.標準入力からまず整数 n (これが読み込むデータの数を表わす) を読み込む.
+  2.サイズ n の int 型配列を割り当てる.
+  3.n 個の整数を標準入力からその配列に読み込む.
+  4.*pn に n をセットする.
+  5.その配列の先頭要素へのポインタを返す.
+
 [実行結果]
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % gcc array_scan.c 5_1.c -W
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % ./a.out <in.txt> out.txt
+n:%                                                                                                                                                                
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % diff out.txt exp.txt -w
+
+[out.txt]
+ 11 22 33 44 55 66 77 88
 
 [感想]
+今回の課題では動的割り当てを行い、指定した数の要素が入る配列を作り、その配列に値を入れて
+ポインタを返す関数を作った。動的割り当てをする時は、mollocという関数を使うことを知れた。
 
 ----------------------------------------
 [課題 5.2]
+次の手順でファイルから読み込んだ数値の出現回数をカウントするプログラム distr.c を作成せよ.
+
+  1.課題 (5-1) の new_array_scan を使って, 標準入力から数値を読み取った配列を取得する.
+  2.配列中のデータの最大値 max と最小値 min を求める.
+  3.サイズが max-min+1 の int 型配列を malloc により割り当て, この配列を使ってデータの出現回数を数える. (ヒント: データ i の出現回数を第 i-min 要素にカウントする. このカウント用配列の初期化を忘れないよう注意.)
+  4.最後に, 出現回数が 1 以上のものだけを表示する. 表示形式は, 下記の動作確認用入出力に合わせよ.
 
 [実行結果]
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % gcc array_scan.c 5_1.c -W
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % ./a.out <in.txt> out.txt
+n:%                                                                                                                                                                
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % diff out.txt exp.txt -d
+
+[in.txt]   [out.txt]
+   5          1: 2
+   1          3: 2
+   1          4: 1
+   3
+   3
+   4
+--------------------------
+  5           100: 2
+  100         200: 2
+  200         300: 1
+  300
+  200
+  100
+---------------------------
+2             2147483640: 1
+2147483640    2147483641: 1
+2147483641
 
 [感想]
-
+今回の課題は少し厄介であったが、配列の中身がどうなっているかを書き出すことで実装できた。
 
 ----------------------------------------
 [課題 5.3]
+文字配列 s に格納された文字列の 2 倍の長さの文字列をちょうど格納できるサイズの文字配列を動的に割り当て, そこに s 中の文字列を 2 回繰り返したものをコピーし, その文字配列の先頭要素へのポインタを返す関数, char *strdouble(char s[ ]) を作成せよ.
 
 [実行結果]
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % gcc strdouble.c 5_3.c -W
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % ./a.out <in.txt> out.txt
+s = s = s = %                                                                                                                                                      
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % diff out.txt exp.txt -d    
+
+[out.txt]
+abcabc
+12345678901234567890
 
 [感想]
-
+今回の課題では、strlen関数を用いてメモリを動的に割り当てて、for文を2回回すことで入力した文字列を2倍にして返す関数を実装した。
 
 ----------------------------------------
 [課題 5.4]
+標準入力から複数行 (EOFで終了) の文字列を読み込み, これらを行の逆順に標準出力に出力するプログラム linereverse.c を作成せよ
 
 [実行結果]
 
-[感想]
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % gcc linerreverse.c -W
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % ./a.out
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+Error
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
 
+[感想]
+今回の課題は特に難しかったが、
+strcpy関数を用いることでlineに標準入力した文字列がコピーされることを利用して実装した。
+読み取れる行数に達すると、エラーメッセージを出力し、while文から抜け出すようにした。
 
 ----------------------------------------
 [課題 5.5]
+例題 (5-3) のプログラムを次のように書き換えよ.
+
+  1.動的割当てと値の代入の処理を一つの関数 pref_t *pref_new(char *name, double area, int population) として独立させる. 
+    pref_new は, pref_t 型の変数を動的に割り当て, その変数に name, area, population を代入し, その変数へのポインタを返す.
+  2.出力の処理を一つの関数 void pref_print(pref_t* p) として独立させよ.
+
+2つの関数を pref.c に格納し, 次の pref1main.c とリンクして実行し, 下記の出力が得られることを確認せよ
 
 [実行結果]
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % gcc pref.c pref1main.c -W
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % ./a.out 
+Tokyo        2187.65  12988797
+Osaka        1898.01   8840372
+Hyogo        8395.89   5599359
 
 [感想]
-
+strncpy関数はstrcpyと違い、指定した文字数だけコピーするということ、構造体のポインタに関しても動的割り当てができることを知った。
 
 ----------------------------------------
 [課題 5.6]
+課題 (5-5) の pref1main.c を次のように書き換えよ (pref2main.c として提出せよ).
+  
+  1.変数 a, b, c の代わりに, 配列 p[3] を用いよ.
+  2.出力と領域の解放は for ループを用いて行うようにせよ.
+
+pref.c とリンクして実行し, 課題 (5-5) と同じ出力が得られることを確認せよ.
 
 [実行結果]
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % gcc pref.c pref2main.c -W
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % ./a.out 
+Tokyo        2187.65  12988797
+Osaka        1898.01   8840372
+Hyogo        8395.89   5599359
 
 [感想]
-
+問題の指示に従って、動的割り当てされた構造体配列の要素それぞれにpref_new関数を適用し、
+for文を用いて構造体のメンバ変数の表示と、メモリの解放をした。
 
 ----------------------------------------
 [課題 5.7]
+関数 pref_t *pref_new_scan() を作成し, pref.h, pref.c に追加せよ.
+
+pref_new_scan は, pref_t 型の変数を動的に割り当て, その変数に標準入力から name, area, population を読み込み, その変数へのポインタを返す. ただし, EOF を検出すると NULL を返すものとする.
+
+pref.c に作成した関数を用いて次のような処理を行うプログラム pref3main.c を作成せよ.
+
+標準入力から県のデータを EOF になるまで読み込む.
+県のデータを読み込んだのと逆順に標準出力に出力する.
+県の数の上限は 47 としてよい (pref3main.c の中で #define せよ).
+
+下記の入出力が得られることを確認せよ.
+
+[in.txt]
+Tokyo        2187.65  12988797
+Osaka        1898.01   8840372
+Hyogo        8395.89   5599359
+Kyoto        4613.13   2631441
+Nara         3691.09   1400951
+Shiga        4017.36   1402132
+Wakayama     4726.29   1005710
+Mie          5777.22   1862575
+
+[exp.txt]
+Mie          5777.22   1862575
+Wakayama     4726.29   1005710
+Shiga        4017.36   1402132
+Nara         3691.09   1400951
+Kyoto        4613.13   2631441
+Hyogo        8395.89   5599359
+Osaka        1898.01   8840372
+Tokyo        2187.65  12988797
 
 [実行結果]
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % gcc pref.c pref3main.c -W
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % ./a.out <in.txt> out.txt 
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % diff out.txt exp.txt -w  
+
+[out.txt]
+Mie        5777.22   1862575
+Wakayama   4726.29   1005710
+Shiga      4017.36   1402132
+Nara       3691.09   1400951
+Kyoto      4613.13   2631441
+Hyogo      8395.89   5599359
+Osaka      1898.01   8840372
+Tokyo      2187.65  12988797
 
 [感想]
-
+pref_t *pref_new_scan()はすぐに実装できた。
+配列を初期化することの重要性を再認識できた。
 
 ----------------------------------------
 [課題 5.8]
+以下の指示に従い, 整数型のスタックを実装する次の関数群を作成し, istack.c に格納せよ.
+
+  (1) 関数 istack_new と istack_delete を実装せよ.
+
+      ・istack_t *istack_new(int size) は, サイズ size の整数型スタックを新たに作り, そのポインタを返す.
+          
+          1.まず, malloc により istack_t 型の変数を 1 つ割り当てる. malloc が失敗した場合 (malloc の返り値が NULL の場合) には, その旨を stderr に出力して終了する (exit(1) を呼ぶ) ようにせよ.
+          2.構造体の size, sp, data を次の通り初期化する.
+            ・size には引数 size の値を代入
+            ・sp の初期値は 0
+            ・サイズ size の整数型配列を割り当て, その先頭要素へのポインタを data にセットする. malloc が失敗した場合には, その旨を stderr に出力して終了する (exit(1) を呼ぶ) ようにせよ.
+
+　    ・void istack_delete(istack_t *s) は s の指すスタック (および s->data の指す配列) の動的領域を解放する.
+          1.まず, s->data の指すデータを解放する.
+          2.次に s の指すデータを解放する.
+      
+      ・次の main とリンクして動作確認せよ. (略)
+  
+  (2) 関数 istack_push を実装せよ.
+
+     ・void istack_push(istack_t *s, int d) は, データを記憶する配列の末尾に d を追加する. ただし, スタックが満杯の場合には, 何も行わないものとする.
+          1.最初のデータが data[0] に, 次のデータが data[1] に, その次のデータが data[2] に, … と格納されるされるようにせよ. なお, sp はスタックが保持しているデータ数を表すことに留意せよ.
+          2.スタックが満杯 (記憶しているデータ数が size に等しい場合) には, 何も行わないようにせよ.
+
+     ・次の main とリンクして動作確認せよ
+
+  (3) 関数 istack_pop を実装せよ.
+
+      ・void istack_pop(istack_t *s, int *d) は, スタックのデータを記憶する配列の末尾の要素の値を *d にセットし, スタックからそのデータを削除する. ただし, スタックが空の場合には, データの削除は行わず, *d に 0 をセットするものとする.
+      
+      ・次の main とリンクして動作確認せよ
+
+  (4) 関数 istack_empty と istack_full を実装せよ.
+
+      ・int istack_empty(istack_t *s) は, スタックが空のとき 1 を, そうでないとき 0 を返す.
+
+      ・int istack_full(istack_t *s) は, スタックが満杯のとき 1 を, そうでないとき 0 を返す.
+
+      ・次の main とリンクして動作確認せよ
+
+  (5) istack_push を改良し, size を拡張できるようにせよ.
+
+      ・満杯の istack に対して istack_push を呼び出した場合には, size を 2 倍にし, data の要素数も 2 倍になるように data の再割当てを行って, プッシュされたデータを収容できるようにせよ. 動的領域の再割り当ては, realloc 関数 (教科書 p. 135 参照) により行える.
+      
+      ・次の main とリンクして動作確認せよ
+
+  (6) 完成した istack.c を次のテストプログラム istacktest.c とリンクして実行し, 期待値が出力されることを確認せよ.
 
 [実行結果]
+(1)
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % gcc 5_8_1.c istack.c -w 
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % ./a.out
+(size = 8, sp = 0, data = [ ])
+
+(2)
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % gcc 5_8_2.c istack.c -w
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % ./a.out                
+(size = 4, sp = 0, data = [ ])
+(size = 4, sp = 2, data = [ 5 6 ])
+(size = 4, sp = 4, data = [ 5 6 2 8 ])
+(size = 4, sp = 4, data = [ 5 6 2 8 ])
+
+(3)
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % gcc 5_8_3.c istack.c -w
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % ./a.out                
+(size = 4, sp = 4, data = [ 5 6 2 8 ])
+d = 8
+(size = 4, sp = 3, data = [ 5 6 2 ])
+d = 2
+d = 6
+d = 5
+(size = 4, sp = 0, data = [ ])
+d = 0
+(size = 4, sp = 0, data = [ ])
+
+(4)
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % gcc 5_8_4.c istack.c -w
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % ./a.out                
+(size = 4, sp = 0, data = [ ])
+empty = 1, full = 0
+(size = 4, sp = 2, data = [ 5 6 ])
+empty = 0, full = 0
+(size = 4, sp = 4, data = [ 5 6 2 8 ])
+empty = 0, full = 1
+(size = 4, sp = 2, data = [ 5 6 ])
+empty = 0, full = 0
+(size = 4, sp = 0, data = [ ])
+empty = 1, full = 0
+
+(5)
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % gcc 5_8_5.c istack.c -w 
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % ./a.out
+(size = 4, sp = 4, data = [ 5 6 2 8 ])
+(size = 8, sp = 6, data = [ 5 6 2 8 2 8 ])
+
+(6)
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % gcc istacktest.c istack.c -w
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 5回目 % ./a.out
+E=1, F=0;  push(s,0); (size = 4, sp = 1, data = [ 0 ])
+E=0, F=0;  push(s,1); (size = 4, sp = 2, data = [ 0 1 ])
+E=0, F=0;  push(s,4); (size = 4, sp = 3, data = [ 0 1 4 ])
+E=0, F=0;  push(s,9); (size = 4, sp = 4, data = [ 0 1 4 9 ])
+E=0, F=1;  pop(s) = 9; (size = 4, sp = 3, data = [ 0 1 4 ])
+E=0, F=0;  pop(s) = 4; (size = 4, sp = 2, data = [ 0 1 ])
+E=0, F=0;  push(s,0); (size = 4, sp = 3, data = [ 0 1 0 ])
+E=0, F=0;  push(s,1); (size = 4, sp = 4, data = [ 0 1 0 1 ])
+E=0, F=1;  pop(s) = 1; (size = 4, sp = 3, data = [ 0 1 0 ])
+E=0, F=0;  pop(s) = 0; (size = 4, sp = 2, data = [ 0 1 ])
+E=0, F=0;  pop(s) = 1; (size = 4, sp = 1, data = [ 0 ])
+E=0, F=0;  pop(s) = 0; (size = 4, sp = 0, data = [ ])
+E=1, F=0;  pop(s) = 0; (size = 4, sp = 0, data = [ ])
+E=1, F=0;  pop(s) = 0; (size = 4, sp = 0, data = [ ])
+E=1, F=0;  push(s,0); (size = 4, sp = 1, data = [ 0 ])
+E=0, F=0;  push(s,1); (size = 4, sp = 2, data = [ 0 1 ])
+E=0, F=0;  push(s,4); (size = 4, sp = 3, data = [ 0 1 4 ])
+E=0, F=0;  push(s,9); (size = 4, sp = 4, data = [ 0 1 4 9 ])
+E=0, F=1;  push(s,16); (size = 8, sp = 5, data = [ 0 1 4 9 16 ])
+E=0, F=0;  push(s,25); (size = 8, sp = 6, data = [ 0 1 4 9 16 25 ])
+E=0, F=0;  push(s,36); (size = 8, sp = 7, data = [ 0 1 4 9 16 25 36 ])
+E=0, F=0;  push(s,49); (size = 8, sp = 8, data = [ 0 1 4 9 16 25 36 49 ])
+E=0, F=1;  push(s,64); (size = 16, sp = 9, data = [ 0 1 4 9 16 25 36 49 64 ])
+E=0, F=0;  push(s,81); (size = 16, sp = 10, data = [ 0 1 4 9 16 25 36 49 64 81 ])
+E=0, F=0;  push(s,100); (size = 16, sp = 11, data = [ 0 1 4 9 16 25 36 49 64 81 100 ])
+E=0, F=0;  push(s,121); (size = 16, sp = 12, data = [ 0 1 4 9 16 25 36 49 64 81 100 121 ])
+E=0, F=0;  pop(s) = 121; (size = 16, sp = 11, data = [ 0 1 4 9 16 25 36 49 64 81 100 ])
+E=0, F=0;  pop(s) = 100; (size = 16, sp = 10, data = [ 0 1 4 9 16 25 36 49 64 81 ])
+E=0, F=0;  pop(s) = 81; (size = 16, sp = 9, data = [ 0 1 4 9 16 25 36 49 64 ])
+E=0, F=0;  pop(s) = 64; (size = 16, sp = 8, data = [ 0 1 4 9 16 25 36 49 ])
+E=0, F=0;  pop(s) = 1521; (size = 64, sp = 47, data = [ 0 1 4 9 16 25 36 49 0 1 4 9 16 25 36 49 64 81 100 121 144 169 196 225 256 289 324 361 400 441 484 529 576 625 676 729 784 841 900 961 1024 1089 1156 1225 1296 1369 1444 ])
+E=0, F=0;  pop(s) = 1444; (size = 64, sp = 46, data = [ 0 1 4 9 16 25 36 49 0 1 4 9 16 25 36 49 64 81 100 121 144 169 196 225 256 289 324 361 400 441 484 529 576 625 676 729 784 841 900 961 1024 1089 1156 1225 1296 1369 ])
+E=0, F=0;  push(s,0); (size = 64, sp = 7, data = [ 0 1 4 9 16 25 0 ])
+E=0, F=0;  push(s,1); (size = 64, sp = 8, data = [ 0 1 4 9 16 25 0 1 ])
+E=0, F=0;  pop(s) = 1; (size = 64, sp = 7, data = [ 0 1 4 9 16 25 0 ])
+E=0, F=0;  pop(s) = 0; (size = 64, sp = 6, data = [ 0 1 4 9 16 25 ])
+E=1, F=0;  push(s,0); (size = 4, sp = 1, data = [ 0 ])
+E=0, F=0;  push(s,1); (size = 4, sp = 2, data = [ 0 1 ])
+E=0, F=0;  push(s,4); (size = 4, sp = 3, data = [ 0 1 4 ])
+E=0, F=0;  push(s,9); (size = 4, sp = 4, data = [ 0 1 4 9 ])
+E=0, F=1;  pop(s) = 9; (size = 4, sp = 3, data = [ 0 1 4 ])
+E=0, F=0;  pop(s) = 4; (size = 4, sp = 2, data = [ 0 1 ])
+E=0, F=0;  pop(s) = 1; (size = 4, sp = 1, data = [ 0 ])
+E=0, F=0;  pop(s) = 0; (size = 4, sp = 0, data = [ ])
 
 [感想]
-
+実装する関数が多かったが、stackの理解の向上に繋がったため良かった。
+reallocなど割り当てに関する他の関数についても調べておきたい。
 
 ----------------------------------------
-
-[課題 B4 の感想]
-
+[課題 B5 の感想]
+今回の課題全体としたハードであった。
+次回からは本格的にデータ構造とアルゴリズムとも関連のあるコードを実装していかないといけないので気を引き締めたい。

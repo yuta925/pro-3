@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include "pref.h"
 
@@ -9,13 +10,16 @@ int main(void)
     pref_t *a[P_MAX + 1];
 
     for (i = 0; i < P_MAX; i++)
+        a[i] = 0;
+
+    for (i = 0; i < P_MAX; i++)
     {
         a[i] = pref_new_scan();
         if (a[i] == NULL)
             break;
     }
 
-    for (j = i; j == 0; j--)
+    for (j = i - 1; j >= 0; j--)
     {
         pref_print(a[j]);
         free(a[j]);
