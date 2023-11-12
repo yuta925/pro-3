@@ -42,9 +42,8 @@ void list_print(list_node_t *head_p)
 
     printf("[");
     for (p = head_p->next; p != NULL; p = p->next)
-    {
         printf(" %d ", p->val);
-    }
+
     printf("]\n");
 }
 
@@ -100,18 +99,22 @@ list_node_t *list_insert_uniq(list_node_t *head_p, int val)
 
 list_node_t *list_insert_delete_dup(list_node_t *head_p, int val)
 {
-    list_node_t *p = list_find(head_p, val);
+    list_node_t *search = list_find(head_p, val);
+    list_node_t *initial;
+    list_node_t *p;
 
-    if (p == NULL)
+    if (search == NULL)
     {
-        list_insert(head_p, val);
-        return p;
+        head_p = list_insert(head_p, val);
+        return head_p;
     }
     else
     {
-        printf("%d", p->val);
+        // 直前の節点を指すポインタpを求める
+        for (initial = head_p; initial != search; initial = initial->next)
+            p = initial;
         remove_node(p);
-        return p;
+        return NULL;
     }
 }
 

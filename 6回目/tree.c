@@ -25,7 +25,6 @@ tree_node_t *tree_insert_uniq(tree_node_t *n, int val)
 /* n を根とする二分木に val (の節点) を挿入する */
 {
     /* val と同じ値を持つ節点が存在すれば挿入しないようにせよ. */
-
     if (n == NULL)
     {
         n = create_node(val);
@@ -34,10 +33,15 @@ tree_node_t *tree_insert_uniq(tree_node_t *n, int val)
     {
         n->left = tree_insert_uniq(n->left, val);
     }
-    else
+    else if (val > n->data)
     {
         n->right = tree_insert_uniq(n->right, val);
     }
+    else if (val == n->data)
+    {
+        return n;
+    }
+
     return n;
 }
 
@@ -47,8 +51,8 @@ void tree_print(tree_node_t *n)
     if (n != NULL)
     {
         /* 値の昇順に表示されるようにせよ */
-        printf(" %d", n->data);
         tree_print(n->left);
+        printf(" %d", n->data);
         tree_print(n->right);
     }
 }
