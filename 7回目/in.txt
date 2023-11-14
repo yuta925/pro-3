@@ -1,0 +1,7 @@
+6
+yamada 22 160.5
+yamamoto 22 177.4
+suzuki 21 165.3
+tanaka 20 170.0
+nakamura 22 179.7
+nakamura 21 175.3

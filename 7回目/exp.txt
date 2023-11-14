@@ -1,0 +1,6 @@
+tanaka     20 170.00
+suzuki     21 165.30
+nakamura   21 175.30
+yamada     22 160.50
+yamamoto   22 177.40
+nakamura   22 179.70
