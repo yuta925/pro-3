@@ -27,7 +27,7 @@ void sort(int n, double *a)
     /* 分割の結果, a[0]〜a[r] が p 以下, a[l]〜a[n-1] が p 以上になっている */
 
     if (0 < r)
-        sort(r, a);
+        sort(r + 1, a);
     if (l < n - 1)
-        sort(n - l, a);
+        sort(n - l, &a[l]);
 }

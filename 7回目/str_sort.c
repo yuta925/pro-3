@@ -12,8 +12,10 @@ void str_sort(int n, record_t *a)
         for (i = k + 1; i < n; i++)
             if (a[min].age > a[i].age)
                 min = i;
+            else if (a[min].age == a[i].age && a[min].height > a[i].height)
+                min = i;
         tmp = a[k];
         a[k] = a[min];
-        a[min] = a[k];
+        a[min] = tmp;
     }
 }
