@@ -3,8 +3,8 @@
 #include <time.h> /* 時間計測に必要 */
 #include <assert.h>
 
-#define MIN_N 2 /* 完成後にもっと大きくする */
-#define MAX_N 8 /* 完成後にもっと大きくする */
+#define MIN_N 1024  /* 完成後にもっと大きくする */
+#define MAX_N 65536 /* 完成後にもっと大きくする */
 #define N_TEST 8
 
 void sort(int n, double *a);
@@ -13,12 +13,8 @@ void array_set_rand(int n, double *a)
 {
     /* a[0]〜a[n-1] に乱数のデータをセットする */
     int i;
-    double ransu;
     for (i = 0; i < n; i++)
-    {
-        ransu = rand();
-        a[i] = ransu;
-    }
+        a[i] = rand();
 }
 
 void array_set_sorted(int n, double *a)
