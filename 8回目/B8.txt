@@ -1,0 +1,510 @@
+科目名: プログラミング実習III
+課題: B8
+番号: 38022493
+氏名: 西岡優太
+作成: 2023年 11月 日
+
+----------------------------------------
+[課題 8.1]
+
+    まず, iata_db.c と次の iata_test1.c をコンパイル＆リンクして実行してみよ.
+    
+    db_dump を完成させ, 下記の test1-exp.txt と同じ出力が得られるようにせよ. diff (-Bw オプション付き) で出力が下記の期待値と一致することを確認せよ.
+        ・0〜9 (db->n-1) までではなく, 0〜15 (MAX_RECORDS-1) まで表示されるようにすること.
+        ・record の data が NULL の場合にはそれを表示しないようにすること.
+    
+    [実行結果]
+
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % gcc iata_db.c iata_test1.c -W 
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % ./a.out >out.txt             
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % diff out.txt test1-exp.txt -Bw
+
+    [感想]
+
+----------------------------------------
+[課題 8.2]
+
+    空港データの検索を行う関数 char *db_linear_search(db_t *db, char key[]) を作成し, iata_db.c に追加せよ. 
+    この関数は, db の中で key が一致するレコード (record[?]) を探し, その data (文字配列へのポインタ) を返す. 
+    例えば, 課題 (8-1) の例では, key として "KIX" を与えると, "Osaka : Japan Kansai International" (という文字配列へのポインタ) を返す. 
+    ただし, 該当するレコードが存在しなければ NULL を返す.
+
+    db に格納されている全てのレコードを record[0], record[1], record[2], …, と順に key が一致するまで探すようにせよ (線形探索).
+
+    iata_db.c を次の iata_test2.c とリンクして実行せよ.
+
+    次の入出力が得られることを確認せよ.
+        [test2-in.txt]	
+            AAC
+            CDG
+            FCO
+            JFK
+            JRO
+            KIX
+            AAA
+            NRT
+            ICN
+            SYD
+            LHR
+            PEK
+            SAF
+            ZZZ
+            ITM
+            SFO
+            HND
+            ZYL
+        [test2-exp.txt]
+            AAC => Al Arish : Egypt - Al Arish Airport
+            NO RECORD
+            FCO => Rome : Italy Leonardo Da Vinci/Fiumicino
+            JFK => New York : NY : USA John F Kennedy Intl Airport
+            JRO => Kilimanjaro : Tanzania Kilimanjaro
+            KIX => Osaka : Japan Kansai International
+            NO RECORD
+            NRT => Tokyo : Japan - Narita
+            NO RECORD
+            NO RECORD
+            NO RECORD
+            PEK => Beijing : China Peking Capital Airport
+            SAF => Santa Fe : NM : USA Santa Fe Municipal Airport
+            NO RECORD
+            ITM => Osaka : Japan Itami International Was Osaka
+            SFO => San Francisco : CA : USA San Francisco Intl Airport
+            NO RECORD
+            NO RECORD
+
+    ここまでで問題がなければ, iata_db.h の冒頭の #define __USE_MINI__ をコメントアウトせよ. 
+    これにより, iata_data.csv の全 2700 レコードが読み込まれるようになる. 
+    iata_db.c を再度コンパイルして iata_test2.c とリンクして実行し, 次の入出力が得られることを確認せよ.
+        [test2-in.txt]	
+            AAC
+            CDG
+            FCO
+            JFK
+            JRO
+            KIX
+            AAA
+            NRT
+            ICN
+            SYD
+            LHR
+            PEK
+            SAF
+            ZZZ
+            ITM
+            SFO
+            HND
+            ZYL
+        [test2-exp2.txt]
+            AAC => Al Arish : Egypt - Al Arish Airport
+            CDG => Paris : France Charles De Gaulle
+            FCO => Rome : Italy Leonardo Da Vinci/Fiumicino
+            JFK => New York : NY : USA John F Kennedy Intl Airport
+            JRO => Kilimanjaro : Tanzania Kilimanjaro
+            KIX => Osaka : Japan Kansai International
+            NO RECORD
+            NRT => Tokyo : Japan - Narita
+            ICN => Incheon [Seoul] : South Korea - Incheon International Airport
+            SYD => Sydney : New South Wales : Australia Sydney /KingsfordSmith/ Airport
+            LHR => London : England : United Kingdom Heathrow
+            PEK => Beijing : China Peking Capital Airport
+            SAF => Santa Fe : NM : USA Santa Fe Municipal Airport
+            NO RECORD
+            ITM => Osaka : Japan Itami International Was Osaka
+            SFO => San Francisco : CA : USA San Francisco Intl Airport
+            NO RECORD
+            ZYL => Sylhet : Bangladesh - Sylhet Airport
+    
+    [実行結果]
+
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % gcc iata_db.c iata_test2.c -W  
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % ./a.out <test2-in.txt> out.txt 
+        key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = %                                                       
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % diff -Bw out.txt test2-exp.txt 
+
+    [感想]
+
+----------------------------------------
+[課題 8.3]
+
+    課題 (8-2) の iata_test2.c を書き換え, key を入力する毎に db_linear_search で消費した CPU 時間を計測して表示するプログラム iata_cpu1.c を作成せよ.
+
+    ただし, db_linear_search を 1 回呼び出しただけでは時間が短すぎるため, 
+    1回の key の入力に対して「data = db_linear_search(&db, key);」を10万回繰り返すようにせよ. 
+    CPU 時間は, B7 の課題 (7-5) と同様に, clock 関数を呼び出すことにより計測せよ. 
+    CPU 時間は標準エラー出力 (stderr) に出力するようにせよ.
+
+    [実行結果]
+
+        [最適化なし]
+            (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % gcc -Wall iata_db.c iata_cpu1.c
+            (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % ./a.out                        
+            key = AAC
+            AAC => Al Arish : Egypt - Al Arish Airport
+            cpu =    0.000980 [sec]
+            key = CXI
+            CXI => Christmas Island : Australia - Cassidy Airport
+            cpu =    0.226951 [sec]
+            key = IYK
+            IYK => Inyokern : CA : USA Inyokern Airport
+            cpu =    0.391822 [sec]
+            key = MVD
+            MVD => Montevideo : Uruguay Carrasco
+            cpu =    0.589481 [sec]
+            key = SJW
+            SJW => Shijiazhuang : China Shijiazhuang
+            cpu =    0.749386 [sec]
+            key = YFB
+            YFB => Iqaluit : Northwest Territories : Canada - Iqaluit-Frobisher Bay Airport
+            cpu =    0.916258 [sec]
+            key = ZYL
+            ZYL => Sylhet : Bangladesh - Sylhet Airport
+            cpu =    0.977847 [sec]
+            key = AAA
+            NO RECORD
+            cpu =    2.193793 [sec]
+            key = LLL
+            NO RECORD
+            cpu =    2.191476 [sec]
+            key = ZZZ
+            NO RECORD
+            cpu =    2.159528 [sec]
+            key = %  
+        [最適化あり]
+            (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % ./a.out                            
+            key = AAC
+            AAC => Al Arish : Egypt - Al Arish Airport
+            cpu =    0.001547 [sec]
+            key = CXI
+            CXI => Christmas Island : Australia - Cassidy Airport
+            cpu =    0.149905 [sec]
+            key = IYK
+            IYK => Inyokern : CA : USA Inyokern Airport
+            cpu =    0.237294 [sec]
+            key = MVD
+            MVD => Montevideo : Uruguay Carrasco
+            cpu =    0.357985 [sec]
+            key = SJW
+            SJW => Shijiazhuang : China Shijiazhuang
+            cpu =    0.438070 [sec]
+            key = YFB
+            YFB => Iqaluit : Northwest Territories : Canada - Iqaluit-Frobisher Bay Airport
+            cpu =    0.524876 [sec]
+            key = ZYL
+            ZYL => Sylhet : Bangladesh - Sylhet Airport
+            cpu =    0.563099 [sec]
+            key = AAA
+            NO RECORD
+            cpu =    1.272560 [sec]
+            key = LLL
+            NO RECORD
+            cpu =    1.268702 [sec]
+            key = ZZZ
+            NO RECORD
+            cpu =    1.245348 [sec]
+            key = %       
+    
+    [感想]
+
+----------------------------------------
+[課題 8.4]
+
+    二分探索により空港データの検索を行う関数 char *db_binary_search(db_t *db, char key[KEY_LEN+1]) を作成し, iata_db.c に追加せよ. この関数の引数と返り値は db_linear_search と同じである.
+
+    まず iata_db.h の #define __USE_MINI__ を復活し, iata_db.c と下記の iata_test4.c をコンパイル＆リンクして実行せよ.
+
+    線形探索の時と同じ入出力が得られることを確認せよ.
+        [test2-in.txt]	
+            AAC
+            CDG
+            FCO
+            JFK
+            JRO
+            KIX
+            AAA
+            NRT
+            ICN
+            SYD
+            LHR
+            PEK
+            SAF
+            ZZZ
+            ITM
+            SFO
+            HND
+            ZYL
+        [test2-exp.txt]
+            AAC => Al Arish : Egypt - Al Arish Airport
+            NO RECORD
+            FCO => Rome : Italy Leonardo Da Vinci/Fiumicino
+            JFK => New York : NY : USA John F Kennedy Intl Airport
+            JRO => Kilimanjaro : Tanzania Kilimanjaro
+            KIX => Osaka : Japan Kansai International
+            NO RECORD
+            NRT => Tokyo : Japan - Narita
+            NO RECORD
+            NO RECORD
+            NO RECORD
+            PEK => Beijing : China Peking Capital Airport
+            SAF => Santa Fe : NM : USA Santa Fe Municipal Airport
+            NO RECORD
+            ITM => Osaka : Japan Itami International Was Osaka
+            SFO => San Francisco : CA : USA San Francisco Intl Airport
+            NO RECORD
+            NO RECORD
+
+    問題がなければ, 再度 iata_db.h の冒頭の #define __USE_MINI__ をコメントアウトして, コンパイル&実行し, 線形探索と同じ入出力が得られることを確認せよ.
+        [test2-in.txt]	
+            AAC
+            CDG
+            FCO
+            JFK
+            JRO
+            KIX
+            AAA
+            NRT
+            ICN
+            SYD
+            LHR
+            PEK
+            SAF
+            ZZZ
+            ITM
+            SFO
+            HND
+            ZYL
+        [test2-exp2.txt] 
+            AAC => Al Arish : Egypt - Al Arish Airport
+            CDG => Paris : France Charles De Gaulle
+            FCO => Rome : Italy Leonardo Da Vinci/Fiumicino
+            JFK => New York : NY : USA John F Kennedy Intl Airport
+            JRO => Kilimanjaro : Tanzania Kilimanjaro
+            KIX => Osaka : Japan Kansai International
+            NO RECORD
+            NRT => Tokyo : Japan - Narita
+            ICN => Incheon [Seoul] : South Korea - Incheon International Airport
+            SYD => Sydney : New South Wales : Australia Sydney /KingsfordSmith/ Airport
+            LHR => London : England : United Kingdom Heathrow
+            PEK => Beijing : China Peking Capital Airport
+            SAF => Santa Fe : NM : USA Santa Fe Municipal Airport
+            NO RECORD
+            ITM => Osaka : Japan Itami International Was Osaka
+            SFO => San Francisco : CA : USA San Francisco Intl Airport
+            NO RECORD
+            ZYL => Sylhet : Bangladesh - Sylhet Airport
+
+    [実行結果]
+
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % gcc iata_db.c iata_test4.c -W 
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % ./a.out <test2-in.txt> out.txt
+        key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = %                                                 
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % diff -Bw out.txt test2-exp.txt
+
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % gcc iata_db.c iata_test4.c -W 
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % ./a.out <test2-in.txt> out.txt
+        key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = %                                                 
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % diff -Bw out.txt test2-exp.txt
+
+    [感想]
+
+----------------------------------------
+[課題 8.5]
+
+    課題 (8-3) の iata_cpu1.c の db_linear_search を db_binary_search に書き換えて iata_cpu2.c を作成し, 二分探索の計算時間を計測せよ.
+
+    計測は iata_db.h の冒頭の #define __USE_MINI__ をコメントアウトした状態で コンパイル＆リンクを行うこと.
+
+    次の入力に対して検索に要した CPU 時間を計測せよ. 最適化オプション -O2 なしとありの両方について試せ. 線形探索との比較について考察し, 結果をレポートに記せ.   
+    
+    [実行結果]
+
+        [最適化なし]
+            (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % gcc -Wall iata_db.c iata_cpu2.c 
+            (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % ./a.out                        
+            key = AAC
+            AAC => Al Arish : Egypt - Al Arish Airport
+            cpu =    0.017653 [sec]
+            key = CXI
+            CXI => Christmas Island : Australia - Cassidy Airport
+            cpu =    0.014321 [sec]
+            key = IYK
+            IYK => Inyokern : CA : USA Inyokern Airport
+            cpu =    0.019435 [sec]
+            key = MVD
+            MVD => Montevideo : Uruguay Carrasco
+            cpu =    0.017234 [sec]
+            key = SJW
+            SJW => Shijiazhuang : China Shijiazhuang
+            cpu =    0.014833 [sec]
+            key = YFB
+            YFB => Iqaluit : Northwest Territories : Canada - Iqaluit-Frobisher Bay Airport
+            cpu =    0.016644 [sec]
+            key = ZYL
+            ZYL => Sylhet : Bangladesh - Sylhet Airport
+            cpu =    0.018425 [sec]
+            key = AAA
+            NO RECORD
+            cpu =    0.013956 [sec]
+            key = LLL
+            NO RECORD
+            cpu =    0.019970 [sec]
+            key = ZZZ
+            NO RECORD
+            cpu =    0.017679 [sec]
+            key = %    
+        [最適化あり]
+            (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % ./a.out                            
+            key = AAC
+            AAC => Al Arish : Egypt - Al Arish Airport
+            cpu =    0.009705 [sec]
+            key = CXI
+            CXI => Christmas Island : Australia - Cassidy Airport
+            cpu =    0.007852 [sec]
+            key = IYK
+            IYK => Inyokern : CA : USA Inyokern Airport
+            cpu =    0.013489 [sec]
+            key = MVD
+            MVD => Montevideo : Uruguay Carrasco
+            cpu =    0.009723 [sec]
+            key = SJW
+            SJW => Shijiazhuang : China Shijiazhuang
+            cpu =    0.012054 [sec]
+            key = YFB
+            YFB => Iqaluit : Northwest Territories : Canada - Iqaluit-Frobisher Bay Airport
+            cpu =    0.009380 [sec]
+            key = ZYL
+            ZYL => Sylhet : Bangladesh - Sylhet Airport
+            cpu =    0.013314 [sec]
+            key = AAA
+            NO RECORD
+            cpu =    0.009959 [sec]
+            key = LLL
+            NO RECORD
+            cpu =    0.012331 [sec]
+            key = ZZZ
+            NO RECORD
+            cpu =    0.011035 [sec]
+            key = %     
+
+    [感想]
+
+----------------------------------------
+[課題 8.6]
+
+    ハッシュ法 (closed hash) により空港データの検索を行えるようにするために, 下記の 2 つの関数 db_hash_load と db_hash_search を作成し, iata_db.c に追加せよ.
+    ハッシュ関数には, 次の db_hash_f を用いよ.
+
+    (1) void db_hash_load(db_t *db)
+        db_load と同様, ファイルからデータを読み込む. db_load を参考に作成せよ.
+            ・db_load では, n 番目 (db->n 番目) の要素を db->record の n 番目に格納しているが, これを h 番目に格納するように修正せよ.
+            ・ただし, h の値は, まず h = db_hash_f(key) とし, 配列の h 番目に既にデータが格納されていれば, 空きが見つかるまで 1 ずつ増やす (ただし, 値が m になったら m を引く (0 に戻す) こと).
+            ・「配列の h 番目に既にデータが格納されているかどうか」は, 初期化関数 db_init を見て考えよ.
+        動作確認のために, iata_db.h の #define __USE_MINI__ を復活せよ. iata_db.c と次の iata_test6a.c をコンパイル＆リンク して実行し, 下記の test6-exp.txt と同じ出力が得られることを確認せよ. (diff -Bw で出力が期待値と一致することを確認せよ.)
+    
+    (2) char *db_hash_search(db_t *db, char key[KEY_LEN+1])
+        db 中に key が key と一致するレコードを探し, その data (文字配列へのポインタ) を返す. key が一致するレコードがなければ NULL を返す.
+            ・db->record[h] の data を返せば良い.
+            ・ただし, h の値は, まず h = db_hash_f(key) とし, db->record[h] と key と一致しなければ, 一致する (か, 一致するデータはないと判定される) まで 1 ずつ増やす.
+            ・一致するレコードがないと判断されれば NULL を返すようにすること.
+        iata_db.c と次の iata_test6b.c をコンパイル＆リンクして実行せよ.
+
+    [実行結果]
+
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % gcc -Wall iata_db.c iata_test6b.c
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % ./a.out <test2-in.txt> out.txt   
+        code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = %                                    
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % diff -Bw out.txt test2-exp.txt
+
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % gcc -Wall iata_db.c iata_test6b.c
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % ./a.out <test2-in.txt> out.txt   
+        code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = %                                    
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % diff -Bw out.txt test2-exp.txt
+
+    [感想]
+    
+----------------------------------------
+[課題 8.7]
+    
+    課題 (8-3) の iata_cpu1.c に対して下記の変更を行って iata_cpu3.c を作成し, ハッシュ法の計算時間を計測せよ.
+        ・db_load を db_hash_load に変更する,
+        ・db_linear_search を db_hash_search に変更する.
+    
+    iata_db.h の冒頭の #define __USE_MINI__ をコメントアウトした後に, コンパイル＆リンクを行うこと.
+
+    次の入力に対して検索に要した CPU 時間を計測せよ. 最適化オプション -O2 なしとありの両方について試せ. 線形探索や二分探索との比較について考察し, 結果をレポートに記せ.
+
+    [実行結果]
+
+        [最適化なし]
+            (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % gcc -Wall iata_db.c iata_cpu3.c  
+            (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % ./a.out
+            key = AAC
+            AAC => Al Arish : Egypt - Al Arish Airport
+            cpu =    0.003588 [sec]
+            key = CXI
+            CXI => Christmas Island : Australia - Cassidy Airport
+            cpu =    0.004644 [sec]
+            key = IYK
+            IYK => Inyokern : CA : USA Inyokern Airport
+            cpu =    0.007011 [sec]
+            key = MVD
+            MVD => Montevideo : Uruguay Carrasco
+            cpu =    0.003809 [sec]
+            key = SJW
+            SJW => Shijiazhuang : China Shijiazhuang
+            cpu =    0.008769 [sec]
+            key = YFB
+            YFB => Iqaluit : Northwest Territories : Canada - Iqaluit-Frobisher Bay Airport
+            cpu =    0.038322 [sec]
+            key = ZYL
+            ZYL => Sylhet : Bangladesh - Sylhet Airport
+            cpu =    0.004089 [sec]
+            key = AAA
+            NO RECORD
+            cpu =    0.004001 [sec]
+            key = LLL
+            NO RECORD
+            cpu =    0.002497 [sec]
+            key = ZZZ
+            NO RECORD
+            cpu =    0.001326 [sec]
+            key = %   
+        [最適化あり]
+            (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % ./a.out                            
+            key = AAC
+            AAC => Al Arish : Egypt - Al Arish Airport
+            cpu =    0.003233 [sec]
+            key = CXI
+            CXI => Christmas Island : Australia - Cassidy Airport
+            cpu =    0.001651 [sec]
+            key = IYK
+            IYK => Inyokern : CA : USA Inyokern Airport
+            cpu =    0.002433 [sec]
+            key = MVD
+            MVD => Montevideo : Uruguay Carrasco
+            cpu =    0.001817 [sec]
+            key = SJW
+            SJW => Shijiazhuang : China Shijiazhuang
+            cpu =    0.005010 [sec]
+            key = YFB
+            YFB => Iqaluit : Northwest Territories : Canada - Iqaluit-Frobisher Bay Airport
+            cpu =    0.013551 [sec]
+            key = ZYL
+            ZYL => Sylhet : Bangladesh - Sylhet Airport
+            cpu =    0.001675 [sec]
+            key = AAA
+            NO RECORD
+            cpu =    0.001416 [sec]
+            key = LLL
+            NO RECORD
+            cpu =    0.001711 [sec]
+            key = ZZZ
+            NO RECORD
+            cpu =    0.001710 [sec]
+            key = %  
+
+    [感想]
+
+----------------------------------------
+[課題 B8 の感想]
+

@@ -1,0 +1,16 @@
+[   0] AAC Al Arish : Egypt - Al Arish Airport
+[   1] FCO Rome : Italy Leonardo Da Vinci/Fiumicino
+[   2] ITM Osaka : Japan Itami International Was Osaka
+[   3] JFK New York : NY : USA John F Kennedy Intl Airport
+[   4] JRO Kilimanjaro : Tanzania Kilimanjaro
+[   5] KIX Osaka : Japan Kansai International
+[   6] NRT Tokyo : Japan - Narita
+[   7] PEK Beijing : China Peking Capital Airport
+[   8] SAF Santa Fe : NM : USA Santa Fe Municipal Airport
+[   9] SFO San Francisco : CA : USA San Francisco Intl Airport
+[  10]     
+[  11]     
+[  12]     
+[  13]     
+[  14]     
+[  15]     
