@@ -2,7 +2,7 @@
 課題: B6
 番号: 37022493
 氏名: 西岡優太
-作成: 2023年月日
+作成: 2023年11月12日
 
 ----------------------------------------
 [課題 6.1]
@@ -16,8 +16,26 @@
 
 [実行結果]
 
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 6回目 % gcc list.c list1test.c -W
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 6回目 % ./a.out                  
+input = 3
+[ 3 ]
+input = 5
+[ 5 3 ]
+input = 4
+[ 4 5 3 ]
+input = 3
+[ 3 4 5 3 ]
+input = %     
 
 [感想]
+この課題では、リストの表示と挿入を実装した。
+挿入の際に気をつけた点として、
+    new_node->next = n->next;    
+    n->next = new_node;
+の順番である。もし、先に2行目を実行してしまうと
+次の節点はどこからもポインタされなくなってしまう。
+表示に関しては、for文でpのポインタを次の節点のポインタに変えることで実現できた。
 
 ----------------------------------------
 [課題 6.2]
@@ -29,8 +47,22 @@ list2test.c は, 標準入力から次々に整数値を入力し, その数が�
 
 [実行結果]
 
-[感想]
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 6回目 % gcc list.c list2test.c -W
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 6回目 % ./a.out
+input = 3
+[ 3 ]
+input = 5
+[ 5 3 ]
+input = 4
+[ 4 5 3 ]
+input = 3
+[ 4 5 -3 ]
+input = %   
 
+[感想]
+今回の課題では、リスト中に同じ要素があるかどうか判定し、もしあれば符号を反転させる関数を実装した。
+list_find関数内の処理は、list_printでのfor文から着想を得て、for文内でもし同じ値があった場合、
+breakしてその時点でのポインタpを返し、無かったらnullを返すようにした。
 
 ----------------------------------------
 [課題 6.3]
@@ -54,6 +86,7 @@ input = 4
 input = ^d     (CTRL+d で入力の終了)
 
 [実行結果]
+
 (base) nishiokayuuta@nishiokayuutanoMacBook-Air 6回目 % ./a.out                  
 input = 3   
 [ 3 ]
@@ -64,8 +97,11 @@ input = 3
 input = 4
 [ 4  5  3 ]
 input = %   
-[感想]
 
+[感想]
+今回の課題では、すでにリスト内に同じ要素がある場合に挿入をしないようにするlist_insert_uniq関数を実装した。
+難易度は高くなく、ポインタpにlist_find関数の返り値を代入し、その値で条件分岐することで実現できた。
+同じ値があったときにpをそのまま返すという処理を6-9でも使った。
 
 ----------------------------------------
 [課題 6.4]
@@ -91,16 +127,28 @@ input = %
 (base) nishiokayuuta@nishiokayuutanoMacBook-Air 6回目 % gcc list4time.c list.c myrand.c -W
 (base) nishiokayuuta@nishiokayuutanoMacBook-Air 6回目 % ./a.out
 n=5000
-cpu = 0.038443 [sec]
-cpu = 0.02578 [sec]
-cpu = 0.051559 [sec]
-(base) nishiokayuuta@nishiokayuutanoMacBook-Air 6回目 % ./a.out
-n=100000
-cpu = 10.3161 [sec]
-cpu = 10.2998 [sec]
-cpu = 20.5544 [sec]
-[感想]
+cpu = 0.03946 [sec]
+cpu = 0.025716 [sec]
+cpu = 0.051098 [sec]
 
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 6回目 % ./a.out
+n=10000
+cpu = 0.124171 [sec]
+cpu = 0.110806 [sec]
+cpu = 0.269104 [sec]
+
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 6回目 % ./a.out
+n=15000
+cpu = 0.264667 [sec]
+cpu = 0.238215 [sec]
+cpu = 0.466169 [sec]
+
+[感想]
+それぞれの処置における時間計算量はO(n^2)である。
+n=5000とn=10000の時の時間を比べると、nが2倍になっているのに対して、時間は4倍ほどになっている。
+また、n=5000とn=15000で比べても、nが3倍になっているのに対して、時間は約9倍になっている。
+そして、myrand_initを実行しなければ、list_findのfor文の処理に余計に時間がかかってしまう(最悪時間計算量は2n^2ほど)ため、
+myrand_initを実行したときに比べて処理の時間が2倍ほどかかると推測できる。
 
 ----------------------------------------
 [課題 6.5]
@@ -120,8 +168,25 @@ list_node_t* list_insert_delete_dup(list_node_t *head_p, int val) は, list_inse
 
 [実行結果]
 
-[感想]
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 6回目 % gcc list.c list5test.c -W        
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 6回目 % ./a.out                  
+input = 3
+[ 3 ]
+input = 5
+[ 5 3 ]
+input = 3
+[ 5 ]
+input = 4
+[ 4 5 ]
+input = 4
+[ 5 ]
+input = %  
 
+[感想]
+今回の課題では、リストに既に同じ値があった場合挿入を行わず、さらに既にあった同じ値を持つ節点を削除する関数を実装した。
+この課題に一番時間をかけてしまったのだが、もし同じ値があった場合にその直前のポインタを探した削除する処理の実装に躓いた。
+initialというlist_node_t型のポインタ変数を用意し、for文を使うことでpに直前の節点を指すポインタを求めることができた。
+initialが次の節点のポインタに変わる前にpにinitialのポインタを代入するというのがこの課題を解く鍵となった。
 
 ----------------------------------------
 [課題 6.9]
@@ -149,9 +214,28 @@ input = ^d     (CTRL+d で入力の終了)
 
 [実行結果]
 
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 6回目 % gcc tree.c tree9test.c -W
+(base) nishiokayuuta@nishiokayuutanoMacBook-Air 6回目 % ./a.out                  
+input = 3
+[ 3 ]
+input = 5
+[ 3 5 ]
+input = 3
+[ 3 5 ]
+input = 4
+[ 3 4 5 ]
+input = %    
+
 [感想]
+この課題では、二分木への値の挿入とその内容を表示する関数を実装した。
+ree_insert_uniq関数では、条件を追加し、val == n->dataの時何も動作をしないようにした。
+これは6-3でも同じような処理を行ったのですぐにできた。
+tree_print関数では、二分木のたどりかたとして中央順を選んだ。
+中央順で辿ることで、要素を小さい順に表示させることができた。
 
 ----------------------------------------
 
 [課題 B6 の感想]
+今回は実装が全体的に難しかったが、リストと二分木の理解が深まった。
+データ構造とアルゴリズムの授業で出てきたAVL探索木などの実装も自分でやってみたいと思う。
 

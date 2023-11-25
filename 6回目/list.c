@@ -25,7 +25,6 @@ static list_node_t *insert_node(list_node_t *n, int val)
 /* n の指す節点の直後に, 値 val を保持する新しい節点を挿入し,
   その節点へのポインタを返す */
 {
-
     list_node_t *new_node = create_node(val);
 
     /* ノード n (nの指す節点) の直後に挿入 (この部分を埋めよ) */
@@ -40,9 +39,9 @@ void list_print(list_node_t *head_p)
 {
     list_node_t *p;
 
-    printf("[");
+    printf("[ ");
     for (p = head_p->next; p != NULL; p = p->next)
-        printf(" %d ", p->val);
+        printf("%d ", p->val);
 
     printf("]\n");
 }
@@ -77,10 +76,7 @@ list_node_t *list_find(list_node_t *head_p, int val)
     for (p = head_p->next; p != NULL; p = p->next)
     {
         if (p->val == val)
-        {
             return p;
-            break;
-        }
     }
     return NULL;
 }

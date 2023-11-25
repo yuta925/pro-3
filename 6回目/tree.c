@@ -26,21 +26,13 @@ tree_node_t *tree_insert_uniq(tree_node_t *n, int val)
 {
     /* val と同じ値を持つ節点が存在すれば挿入しないようにせよ. */
     if (n == NULL)
-    {
         n = create_node(val);
-    }
     else if (val < n->data)
-    {
         n->left = tree_insert_uniq(n->left, val);
-    }
     else if (val > n->data)
-    {
         n->right = tree_insert_uniq(n->right, val);
-    }
-    else if (val == n->data)
-    {
+    else
         return n;
-    }
 
     return n;
 }

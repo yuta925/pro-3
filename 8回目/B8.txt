@@ -21,6 +21,10 @@
 
     [感想]
 
+        今回の課題では、db_dump関数を実装してiata_mini.csvのデータを出力させた。
+        dbの初期化、ファイルからのデータの読み込み、dbへの保存、dbの削除という一連の流れを通して
+        構造体がどれだけ役立つのかを理解することができた。      
+
 ----------------------------------------
 [課題 8.2]
 
@@ -117,12 +121,23 @@
     
     [実行結果]
 
+        [#define __USE_MINI__]
         (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % gcc iata_db.c iata_test2.c -W  
         (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % ./a.out <test2-in.txt> out.txt 
         key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = %                                                       
         (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % diff -Bw out.txt test2-exp.txt 
 
+        [#define __USE_MINI__ をコメントアウト]
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % gcc iata_db.c iata_test2.c -W  
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % ./a.out <test2-in.txt> out.txt 
+        key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = key = %                                                       
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % diff -Bw out.txt test2-exp.txt 
+    
     [感想]
+
+        今回は、空港データの検索を行うdb_linear_search関数を実装した。
+        dbの中で一致するkeyが存在するかの判定は、strcmp関数で文字列の比較をすることで実装できた。
+        検索のアルゴリズムとしては、改善の余地があると思った。        
 
 ----------------------------------------
 [課題 8.3]
@@ -205,6 +220,8 @@
             key = %       
     
     [感想]
+        計算時間でいうと、やはり最適化したほうが半分の速さとは言えないが早い。
+        また、keyの先頭文字の文字コードが大きくなるにつれて計算時間が遅くなっていることがわかる。
 
 ----------------------------------------
 [課題 8.4]
@@ -306,7 +323,10 @@
         (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % diff -Bw out.txt test2-exp.txt
 
     [感想]
-
+        今回は、二分探索を用いた空港データの検索を行う関数を実装した。
+        このアルゴリズムは直感的でわかりやすく、かつ、線形探索よりも効率的だと思った。
+        ここでも文字列の比較にstrcmp関数を用いた。
+    
 ----------------------------------------
 [課題 8.5]
 
@@ -387,6 +407,8 @@
             key = %     
 
     [感想]
+        やはり、線形探索の時よりも全体的に計算時間が早いことがわかった。
+        同じ法則で、先頭文字の文字コードが大きくなるにつれて時間計算が遅くなる。
 
 ----------------------------------------
 [課題 8.6]
@@ -410,17 +432,22 @@
 
     [実行結果]
 
+        (1)
         (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % gcc -Wall iata_db.c iata_test6b.c
         (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % ./a.out <test2-in.txt> out.txt   
         code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = %                                    
         (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % diff -Bw out.txt test2-exp.txt
 
+        (2)
         (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % gcc -Wall iata_db.c iata_test6b.c
         (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % ./a.out <test2-in.txt> out.txt   
         code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = code = %                                    
         (base) nishiokayuuta@nishiokayuutanoMacBook-Air 8回目 % diff -Bw out.txt test2-exp.txt
 
     [感想]
+        今回は、ハッシュ法を用いてファイルのデータをh番目に格納するdb_hash_loadと、db中にkeyがkeyと一致するレコードを探し, 
+        そのdata(文字配列へのポインタ)を返すdb_hash_searchを実装した。検索の平均検索時間がO(1)にする点で今までのアルゴリズムより
+        優れていると感じた。
     
 ----------------------------------------
 [課題 8.7]
@@ -504,7 +531,16 @@
             key = %  
 
     [感想]
+        線形探索や二分探索と比べて桁違いに計算時間が早いことが分かった。
+        また、keyの先頭文字の文字コードが大きくなるにつれて計算時間が遅くなっていて、
+        最適化した方が計算時間がさらに早い。
+        結論として、長い文字列データなど、毎回データ全体を比較処理自体に長い時間がかかるような場合に
+        有効であることが分かった。
 
 ----------------------------------------
 [課題 B8 の感想]
+
+    今回は、全世界の空港のデータを使って線形探索、二分探索、ハッシュ法を学んだ。
+    前回のソートアルゴリズムより難易度が低いように感じた。ハッシュ法の計算時間の早さに度肝を抜かされた。
+    次回は2回目の中間試験なので、合格できるようにしっかり復習したいと思う。
 

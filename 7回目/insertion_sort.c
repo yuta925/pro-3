@@ -4,7 +4,7 @@ void sort(int n, double *a, int k)
     double tmp;
     for (i = 1; i <= n - 1; i++)
     {
-        for (j = i; 0 <= j; j--)
+        for (j = i; 1 <= j; j--)
         {
             if (a[j] >= a[j - 1])
                 break;

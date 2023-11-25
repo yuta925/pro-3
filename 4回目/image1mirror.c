@@ -22,7 +22,7 @@ void bmp_mirror(bmp_header_t *hd, pixel_t img[MAX_Y][MAX_X])
 
     for (j = 0; j < hd->biWidth; j++)
     {
-        for (i = 0; i <= hd->biHeight / 2; i++)
+        for (i = 0; i < hd->biHeight / 2; i++)
         {
             temp = img[i][j].r;
             img[i][j].r = img[hd->biHeight - 1 - i][j].r;

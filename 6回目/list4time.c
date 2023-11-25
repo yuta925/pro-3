@@ -22,7 +22,7 @@ int main(void)
     clk_end = clock();
     printf("cpu = %g [sec]\n", (double)(clk_end - clk_start) / CLOCKS_PER_SEC);
 
-    // (2) (1)と同じ乱数をn個発生させ、list_findで素sのデータをリスト中に検索する
+    // (2) (1)と同じ乱数をn個発生させ、list_findでそのデータをリスト中に検索する
     clk_start = clock();
     myrand_init();
     for (i = 1; i <= n; i++)
@@ -30,7 +30,7 @@ int main(void)
     clk_end = clock();
     printf("cpu = %g [sec]\n", (double)(clk_end - clk_start) / CLOCKS_PER_SEC);
 
-    // (3) (1)と異なる乱数をn個発生させ、list_findで素sのデータをリスト中に検索する
+    // (3) (1)と異なる乱数をn個発生させ、list_findでそのデータをリスト中に検索する
     clk_start = clock();
     for (i = 1; i <= n; i++)
         list_find(head_p, myrand());
