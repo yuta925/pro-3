@@ -1,0 +1,159 @@
+科目名: プログラミング実習III
+課題: B9
+番号: 38022493
+氏名: 西岡優太
+作成: 2023年 12月10日
+
+----------------------------------------
+[課題 9.1]
+
+    [List 9.1] のプログラムを入力し (コメントは省略して良い), コンパイル, 実行した後, プログラムに
+    適当な修正を加え, 何か好きなものを計算するプログラムを作成せよ.
+
+    [実行結果]
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 9回目 % g++ 1_1.cpp
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 9回目 % ./a.out    
+        hello
+        n = 5
+        5! = 120
+
+    [感想]
+        階乗の計算をするプログラムを作成した。
+        標準入力、出力の記述の仕方がc言語と全く違うため少し困惑したが
+        慣れていきたいと思う。
+
+----------------------------------------
+[課題 9.2]
+
+    2 つの整数型のデータの内容を交換する関数swap(int&, int&) を作成し, 実行結果を確認せよ.
+
+    [実行結果]
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 9回目 % g++ 1_2.cpp
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 9回目 % ./a.out    
+        入れ替え前
+        a = 5, b = 3
+        入れ替え後
+        a = 3, b = 5
+
+    [感想]
+        関数の引数をに&をつけると、その変数の番地が参照されることを利用した。
+        swap関数は頻出する大事な関数だと思う。
+
+----------------------------------------
+[課題 9.3]
+
+    スタックのプログラムを入力し([List 9.11], [List 9.12], [List 9.13] をこの順に一つのファイルに打ち
+    込む), コンパイルし実行してみよ.
+
+    [実行結果]
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 9回目 % g++ 1_3.cpp
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 9回目 % ./a.out
+        9
+        8
+        2
+        3
+        5
+   
+    [感想]
+        メンバ関数の宣言の末尾にconst修飾子をつけると、そのメンバ関数を呼び出した時にオブジェクトが変化しない事を宣言できることを知りました。
+        constをつけるとコンパイルは最適化しやすくなるそうです。
+
+----------------------------------------
+[課題 9.4]
+
+    前の演習で作成したスタックのプログラムを, 配列を動的に割当てるバージョンに変更せよ. コンスト
+    ラクタ中で max の値を表示するなどして, 指定したサイズの配列が割当てられていることを確認せよ
+    
+    [実行結果]
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 9回目 % g++ -Wall 1_4.cpp
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 9回目 % ./a.out          
+        5
+        max = 5
+        9
+        8
+        2
+        3
+        5
+    
+    [感想]
+        配列を標準入力で動的割当てできるようにした。
+        動的割当ての記法がc言語より簡潔だと思った。
+        デフォルト引数というものを初めて知ったが、引数を指定しなかったときに割当てられるサイズを
+        指定できるのだなと知った。
+
+----------------------------------------
+[課題 9.5]
+
+    課題 9.5 stack に equal(const stack&, const stack&) を追加したバージョンを作成し, 動作を確認せよ
+    
+    [実行結果]
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 9回目 % g++ -Wall 1_5.cpp
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 9回目 % ./a.out          
+        max = 100
+        max = 100
+        0
+        1
+    
+    [感想]
+        今回の課題では、メンバ関数ではないがクラスの内部データを操作する必要がある「フレンド関数」
+        というものを実装した。データのカプセル化を保つためにこのような機能もあるのだなと思った。
+
+----------------------------------------
+[課題 9.6]
+
+    上の [List 9.22], [List 9.23] をコンパイルし, 結果を確認せよ. その後, double 型の引数 r をひと
+    つだけとって, 実部にr の値を設定し虚部には 0 を設定するようなコンストラクタ Complex(double) を作成し,
+    main(void) にそれを使うコードを追加せよ
+    
+    [実行結果]
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 9回目 % g++ -Wall 1_6.cpp
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 9回目 % ./a.out          
+        1.11+2.22i
+        3.33+4.44i
+        9.99+88.88i
+        1.11+2.22i
+        r = 4
+        4+0i
+    
+    [感想]
+        C++では同じ関数名の関数を複数定義できるので、今回のように虚部が0となるような複素数を定義するComplex関数も
+        実装することができた。
+
+----------------------------------------
+[課題 9.7]
+
+    Complex に対する減算, 乗算を定義し, 次のようなメインルーチンで実行結果を確かめよ
+
+    [実行結果]
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 9回目 % g++ 1_7.cpp
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 9回目 % ./a.out
+        -0.65+1.32i
+        -5+10i
+
+    [感想]
+        operator+やoperator-のような関数を定義してあげると、自分が作ったクラスのオブジェクトに対して何かしらの
+        演算を施せるようになることを学べた。
+
+----------------------------------------
+[課題 9.8]
+
+    上の[List 9.29] を実行してその結果を示せ
+
+    [実行結果]  
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 9回目 % g++ -Wall 1_8.cpp
+        (base) nishiokayuuta@nishiokayuutanoMacBook-Air 9回目 % ./a.out          
+        1+2i
+        1+3i
+        1+2i
+        2+3i
+        2+4i
+        2+3i
+
+    [感想]
+        出力の<<演算についても、9.7と同様にoperator<<で定義すれば良いと知った。
+        配列bの要素はaの要素それぞれの実部と虚部に1を足したものであるため、このような結果となったと思える。
+
+----------------------------------------
+[課題 B9 の感想]
+初めて触れるC++はCと雰囲気が異なり、慣れるまで少し時間がかかりそうだが、
+Cよりも記述がしやすい部分もあるので引き続き学習を進めていきたいと思う。
