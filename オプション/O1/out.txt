@@ -1,0 +1,6 @@
+four of a kind
+full house
+three of a kind
+two pair
+one pair
+no pair 
