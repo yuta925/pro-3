@@ -7,24 +7,22 @@ private:
     double imag;
 
 public:
-    Complex()
+    Complex() : real(0.0),
+                imag(0.0)
     {
-        real = 0.0;
-        imag = 0.0;
         std::cout << "Complex()" << std::endl;
     }
-    Complex(double r, double i)
+    Complex(double r, double i) : real(r),
+                                  imag(i)
     {
-        real = r;
-        imag = i;
         std::cout << "Complex(" << r << "," << i << ")" << std::endl;
     }
-    Complex(const Complex &c)
+    Complex(const Complex &c) : real(c.real),
+                                imag(c.imag)
     {
-        real = c.real;
-        imag = c.imag;
-        std::cout << "Complex(const Complex&)" << std::endl;
+        std::cout << "Complex(const Complex& c)" << std::endl;
     }
+
     ~Complex() { std::cout << "∼Complex()" << std::endl; }
     Complex &operator=(const Complex &c)
     {

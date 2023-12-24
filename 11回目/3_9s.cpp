@@ -7,12 +7,12 @@ private:
     int *data;
 
 public:
-    stack(int sz)
+    stack(int sz) : sp(0),
+                    max(sz)
     {
-        sp = 0;
-        max = sz;
         data = new int[max];
     }
+
     ~stack() { delete[] data; }
     void push(int d)
     {
